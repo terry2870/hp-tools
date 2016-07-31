@@ -1,1 +1,4 @@
 /.project
+common/.settings/
+*.project
+*.classpath

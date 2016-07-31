@@ -67,7 +67,6 @@
 	</dependencies>
 
 	<modules>
-		<module>utils</module>
-		<module>enums</module>
+		<module>common</module>
 	</modules>
 </project>
