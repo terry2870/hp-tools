@@ -8,13 +8,16 @@
 		<artifactId>my-tools</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>my-tools-common</artifactId>
-	<name>common</name>
+	<artifactId>my-tools-jsptags</artifactId>
+	<name>jsptags</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-		
+		<dependency>
+			<groupId>com.hp.tools</groupId>
+			<artifactId>my-tools-common</artifactId>
+		</dependency>
 	</dependencies>
 </project>
