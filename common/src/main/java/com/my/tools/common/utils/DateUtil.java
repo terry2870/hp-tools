@@ -72,8 +72,8 @@ public class DateUtil {
 	 *            需要转化的类型 “yyyy-MM-dd”
 	 * @return String "2015-08-09"
 	 */
-	public static String int2DateStr(Integer time, String... format) {
-		if (time == null || time == 0) {
+	public static String int2DateStr(int time, String... format) {
+		if (time == 0) {
 			return "";
 		}
 		Date date = new Date((long) time * 1000);
