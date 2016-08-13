@@ -5,10 +5,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.hp.tools</groupId>
-		<artifactId>my-tools</artifactId>
+		<artifactId>hp-tools</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>my-tools-common</artifactId>
+	<artifactId>hp-tools-common</artifactId>
 	<name>common</name>
 	<url>http://maven.apache.org</url>
 	<properties>
