@@ -2,7 +2,7 @@
  * 作者：黄平
  * 
  */
-package com.my.jsptags.tags;
+package com.hp.jsptags.tags;
 
 import javax.servlet.jsp.JspException;
 

@@ -1,9 +1,9 @@
-package com.my.tools.common.beans.page;
+package com.hp.tools.common.beans.page;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.my.tools.common.beans.BaseBean;
+import com.hp.tools.common.beans.BaseBean;
 
 
 /**

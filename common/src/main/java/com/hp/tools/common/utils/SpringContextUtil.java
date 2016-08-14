@@ -1,4 +1,4 @@
-package com.my.tools.common.utils;
+package com.hp.tools.common.utils;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;

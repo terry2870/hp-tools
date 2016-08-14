@@ -1,4 +1,4 @@
-package com.my.tools.common.beans;
+package com.hp.tools.common.beans;
 
 
 /**

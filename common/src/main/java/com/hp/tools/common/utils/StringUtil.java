@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.my.tools.common.utils;
+package com.hp.tools.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

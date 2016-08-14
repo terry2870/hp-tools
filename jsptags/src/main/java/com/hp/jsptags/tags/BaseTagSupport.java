@@ -2,7 +2,7 @@
  * 作者：黄平
  * 
  */
-package com.my.jsptags.tags;
+package com.hp.jsptags.tags;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.my.tools.common.utils.ObjectUtil;
+import com.hp.tools.common.utils.ObjectUtil;
 
 
 public class BaseTagSupport extends TagSupport {

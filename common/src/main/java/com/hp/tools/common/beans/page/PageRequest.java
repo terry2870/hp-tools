@@ -1,6 +1,6 @@
-package com.my.tools.common.beans.page;
+package com.hp.tools.common.beans.page;
 
-import com.my.tools.common.beans.BaseBean;
+import com.hp.tools.common.beans.BaseBean;
 
 /**
  * 统一的分页请求对象 描述：
