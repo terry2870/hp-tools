@@ -23,6 +23,11 @@ public class PageResponse<T> extends BaseBean {
 
 	public PageResponse() {
 	}
+	
+	public PageResponse(int total, List<T> rows) {
+		this.total = total;
+		this.rows = rows;
+	}
 
 	public int getTotal() {
 		return total;

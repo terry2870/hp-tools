@@ -1,6 +1,9 @@
 package com.hp.tools.common.beans.page;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.hp.tools.common.beans.BaseBean;
+import com.hp.tools.common.utils.StringUtil;
 
 /**
  * 统一的分页请求对象 描述：
@@ -33,6 +36,21 @@ public class PageRequest extends BaseBean {
 	 * 排序方式
 	 */
 	private String order = "ASC";
+	
+	/**
+	 * 查询的开始行数
+	 */
+	private int startIndex = 0;
+	
+	
+	public PageModel toPageModel() {
+		PageModel model = new PageModel();
+		model.setCurrentPage(this.page);
+		model.setOrder(this.order);
+		model.setPageSize(this.rows);
+		model.setSortColumn(this.sort);
+		return model;
+	}
 
 	public int getPage() {
 		return page;
@@ -44,6 +62,7 @@ public class PageRequest extends BaseBean {
 		} else {
 			this.page = page;
 		}
+		setStartIndex((this.page - 1) * this.rows);
 	}
 
 	public int getRows() {
@@ -52,6 +71,7 @@ public class PageRequest extends BaseBean {
 
 	public void setRows(int rows) {
 		this.rows = rows;
+		setStartIndex((this.page - 1) * this.rows);
 	}
 
 	public String getSort() {
@@ -60,6 +80,9 @@ public class PageRequest extends BaseBean {
 
 	public void setSort(String sort) {
 		this.sort = sort;
+		if (StringUtils.isNotEmpty(sort)) {
+			this.sort = StringUtil.toDBColumn(sort);
+		}
 	}
 
 	public String getOrder() {
@@ -68,6 +91,14 @@ public class PageRequest extends BaseBean {
 
 	public void setOrder(String order) {
 		this.order = order;
+	}
+
+	public int getStartIndex() {
+		return startIndex;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
 	}
 
 	

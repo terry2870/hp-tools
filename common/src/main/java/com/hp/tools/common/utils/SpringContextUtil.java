@@ -11,21 +11,18 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 
 /**
  * spring上下文对象，用来获取bean
  * @author huangping <br />
  *         2012-12-1
  */
-@Component
 public class SpringContextUtil implements ApplicationContextAware {
 
 	static ApplicationContext applicationContext;
 
 	@Override
 	public synchronized void setApplicationContext(ApplicationContext ctx) throws BeansException {
-		System.out.println("SpringContextUtil init");
 		SpringContextUtil.applicationContext = ctx;
 	}
 

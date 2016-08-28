@@ -7,7 +7,7 @@
 	<info>自定义标签测试</info>
 	<tag>
 		<name>loop</name>
-		<tag-class>com.my.jsptags.tags.LoopTag</tag-class>
+		<tag-class>com.hp.jsptags.tags.LoopTag</tag-class>
 		<body-content>JSP</body-content>
 		<info>循环显示</info>
 		<attribute>
@@ -19,7 +19,7 @@
 	
 	<tag>
 		<name>write</name>
-		<tag-class>com.my.jsptags.tags.WriteTag</tag-class>
+		<tag-class>com.hp.jsptags.tags.WriteTag</tag-class>
 		<body-content>EMPTY</body-content>
 		<info>显示属性</info>
 		<attribute>
@@ -56,7 +56,7 @@
 	
 	<tag>
 		<name>set</name>
-		<tag-class>com.my.jsptags.tags.SetAttributeTag</tag-class>
+		<tag-class>com.hp.jsptags.tags.SetAttributeTag</tag-class>
 		<body-content>EMPTY</body-content>
 		<info>设置值</info>
 		<attribute>
@@ -73,7 +73,7 @@
 	
 	<tag>
 		<name>path</name>
-		<tag-class>com.my.jsptags.tags.ContextPathTag</tag-class>
+		<tag-class>com.hp.jsptags.tags.ContextPathTag</tag-class>
 		<body-content>EMPTY</body-content>
 		<info>输出contextPath</info>
 	</tag>
