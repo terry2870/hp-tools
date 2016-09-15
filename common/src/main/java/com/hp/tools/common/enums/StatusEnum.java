@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 
 public enum StatusEnum {
 
-	OPEN(1, "开启"),
+	OPEN(1, "正常"),
 	DELETE(2, "已删除");
 	
 	private int value;
