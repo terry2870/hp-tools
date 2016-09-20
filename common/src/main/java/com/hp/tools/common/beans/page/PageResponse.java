@@ -20,6 +20,7 @@ public class PageResponse<T> extends BaseBean {
 	private int pageSize;
 	private int totalPage;
 	private List<T> rows = new ArrayList<>();
+	private List<T> footer = new ArrayList<>();
 
 	public PageResponse() {
 	}
@@ -27,6 +28,11 @@ public class PageResponse<T> extends BaseBean {
 	public PageResponse(int total, List<T> rows) {
 		this.total = total;
 		this.rows = rows;
+	}
+	
+	public PageResponse(int total, List<T> rows, List<T> footer) {
+		this(total, rows);
+		this.footer = footer;
 	}
 
 	public int getTotal() {
@@ -76,5 +82,13 @@ public class PageResponse<T> extends BaseBean {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public List<T> getFooter() {
+		return footer;
+	}
+
+	public void setFooter(List<T> footer) {
+		this.footer = footer;
 	}
 }

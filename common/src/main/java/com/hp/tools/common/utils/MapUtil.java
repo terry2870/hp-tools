@@ -20,7 +20,7 @@ public class MapUtil {
 	 * @param keyFunction
 	 * @return
 	 */
-	public static final <K, V> Map<K, V> transformMap(Iterable<V> values, Function<K, ? super V> keyFunction) {
+	public static final <K, V> Map<K, V> list2map(Iterable<V> values, Function<K, ? super V> keyFunction) {
 		if (Iterables.isEmpty(values) || null == keyFunction) {
 			return Maps.newHashMap();
 		}
@@ -35,13 +35,15 @@ public class MapUtil {
 	}
 
 	/**
-	 * Iterator 转换成<key,List>
-	 * 
+	 * Iterator 转换成map
+	 * T-原value值
+	 * K-新的key值
+	 * V-新的value值
 	 * @param values
 	 * @param keyFunction
 	 * @return
 	 */
-	public static final <T, K, V> Map<K, V> transformMap(Iterable<T> values, FunctionExPlus<T, K, V> keyFunction) {
+	public static final <T, K, V> Map<K, V> list2map(Iterable<T> values, FunctionExPlus<T, K, V> keyFunction) {
 		if (Iterables.isEmpty(values) || null == keyFunction) {
 			return Maps.newHashMap();
 		}
