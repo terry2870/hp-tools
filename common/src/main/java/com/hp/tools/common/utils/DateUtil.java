@@ -2,6 +2,7 @@ package com.hp.tools.common.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -101,7 +102,7 @@ public class DateUtil {
 		if (StringUtils.isEmpty(time)) {
 			return null;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat(ArrayUtils.isEmpty(format) ? DEFAULT_DATE_TIME_FORMAT : format[0]);
+		SimpleDateFormat sdf = new SimpleDateFormat(getDateFormatter(format));
 		Date date = null;
 		try {
 			date = sdf.parse(time);
@@ -133,7 +134,47 @@ public class DateUtil {
 		if (date == null) {
 			return null;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat(ArrayUtils.isEmpty(format) ? DEFAULT_DATE_TIME_FORMAT : format[0]);
+		SimpleDateFormat sdf = new SimpleDateFormat(getDateFormatter(format));
 		return sdf.format(date);
+	}
+	
+	/**
+	 * 对日期进行加减
+	 * @param date 被转换的日期
+	 * @param type 转换类型(y-年,M-月,d-日, H-小时, m-分钟, s-秒)
+	 * @param offset 转换的单位
+	 * @param simpleDateFormat 日期格式
+	 * @return
+	 */
+	public static String dateAdd(String date, String type, int offset, String... simpleDateFormat) {
+		if (StringUtils.isEmpty(date)) {
+			return null;
+		}
+		if (StringUtils.isEmpty(type)) {
+			return date;
+		}
+		if (offset == 0) {
+			return date;
+		}
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(string2Date(date, getDateFormatter(simpleDateFormat)));
+		if (type.equals("y")) {
+			cal.add(Calendar.YEAR, offset);
+		} else if (type.equals("M")) {
+			cal.add(Calendar.MONTH, offset);
+		} else if (type.equals("d")) {
+			cal.add(Calendar.DATE, offset);
+		} else if (type.equals("H")) {
+			cal.add(Calendar.HOUR, offset);
+		} else if (type.equals("m")) {
+			cal.add(Calendar.MINUTE, offset);
+		} else if (type.equals("s")) {
+			cal.add(Calendar.SECOND, offset);
+		}
+		return dateToString(cal.getTime(), simpleDateFormat);
+	}
+	
+	private static String getDateFormatter(String... format) {
+		return ArrayUtils.isEmpty(format) ? DEFAULT_DATE_TIME_FORMAT : format[0];
 	}
 }

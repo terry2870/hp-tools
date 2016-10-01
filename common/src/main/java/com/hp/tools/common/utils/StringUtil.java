@@ -3,16 +3,18 @@
  */
 package com.hp.tools.common.utils;
 
+import java.text.DecimalFormat;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author ping.huang
- * 2016年7月30日
+ * @author ping.huang 2016年7月30日
  */
 public class StringUtil {
 
 	/**
 	 * 驼峰转数据库字段名
+	 * 
 	 * @param fieldName
 	 * @return
 	 */
@@ -31,5 +33,21 @@ public class StringUtil {
 			}
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * 保留指定位数的小数
+	 * 
+	 * @param d
+	 * @param num
+	 * @return
+	 */
+	public static String getNumber(double d, int num) {
+		String str = "0.";
+		for (int i = 0; i < num; i++) {
+			str += "0";
+		}
+		DecimalFormat df = new DecimalFormat(str);
+		return df.format(d);
 	}
 }
