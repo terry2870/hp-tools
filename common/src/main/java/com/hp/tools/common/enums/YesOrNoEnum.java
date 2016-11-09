@@ -6,8 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 public enum YesOrNoEnum {
 
 	
-	YES(1, "Y"),
-	NO(0, "N");
+	YES(1, "是"),
+	NO(0, "否");
 	
 	public int getValue() {
 		return value;
@@ -28,10 +28,9 @@ public enum YesOrNoEnum {
 	
 	/**
 	 * 返回json格式的数据
-	 * @param value
 	 * @return
 	 */
-	public static JSONArray toJSON(int value) {
+	public static JSONArray toJSON() {
 		JSONArray arr = new JSONArray();
 		JSONObject json = null;
 		for (YesOrNoEnum e : values()) {
