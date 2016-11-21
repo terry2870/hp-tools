@@ -63,6 +63,22 @@ public class DateUtil {
 		long longTime = getCurrentDate().getTime();
 		return (int) (longTime / 1000);
 	}
+	
+	/**
+	 * 获取当前日期
+	 * @return
+	 */
+	public static String getCurrentDateString() {
+		return getToday(NORMAL_FORMAT);
+	}
+	
+	/**
+	 * 获取当前时间格式
+	 * @return
+	 */
+	public static String getCurrentDateTimeString() {
+		return getToday(DATE_TIME_FORMAT);
+	}
 
 	/**
 	 * 将通过getTime获得的long型的时间，转换成format类型的时间，如"2015-08-09"
