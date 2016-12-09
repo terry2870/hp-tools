@@ -3,15 +3,23 @@
  */
 package com.hp.tools.common.utils;
 
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author ping.huang 2016年7月30日
  */
 public class StringUtil {
 
+	static Logger log = LoggerFactory.getLogger(StringUtil.class);
+	
 	/**
 	 * 驼峰转数据库字段名
 	 * 
@@ -49,5 +57,28 @@ public class StringUtil {
 		}
 		DecimalFormat df = new DecimalFormat(str);
 		return df.format(d);
+	}
+
+	/**
+	 * 获取本机ip
+	 * @return
+	 */
+	public static String fetchLocalIP() {
+		String localIP = "127.0.0.1";
+		DatagramSocket sock = null;
+		try {
+			SocketAddress socket_addr = new InetSocketAddress(InetAddress.getByName("1.2.3.4"), 1);
+			sock = new DatagramSocket();
+			sock.connect(socket_addr);
+
+			localIP = sock.getLocalAddress().getHostAddress();
+		} catch (Exception e) {
+			log.error("fetchLocalIP error", e);
+		} finally {
+			sock.disconnect();
+			sock.close();
+			sock = null;
+		}
+		return localIP;
 	}
 }
