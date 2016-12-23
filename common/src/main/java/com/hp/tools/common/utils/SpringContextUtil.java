@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.util.Assert;
 
 /**
  * spring上下文对象，用来获取bean
@@ -31,6 +33,15 @@ public class SpringContextUtil implements ApplicationContextAware {
 	 * 动态注册bean到spring容器中
 	 * @param beanName
 	 * @param className
+	 */
+	public static void loadBean(String beanName, Class<?> className) throws Exception {
+		loadBean(beanName, className, null);
+	}
+	
+	/**
+	 * 动态注册bean到spring容器中
+	 * @param beanName
+	 * @param className
 	 * @param property
 	 */
 	public static void loadBean(String beanName, Class<?> className, Map<String, Object> property) throws Exception {
@@ -40,12 +51,22 @@ public class SpringContextUtil implements ApplicationContextAware {
 		ConfigurableApplicationContext ctx = (ConfigurableApplicationContext) applicationContext;
 		BeanDefinitionRegistry registry = (BeanDefinitionRegistry) ctx.getBeanFactory();
 		BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(className);
-		if (property != null && !property.isEmpty()) {
+		if (MapUtils.isNotEmpty(property)) {
 			for (Entry<String, Object> entry : property.entrySet()) {
 				builder.addPropertyValue(entry.getKey(), entry.getValue());
 			}
 		}
 		registry.registerBeanDefinition(beanName, builder.getBeanDefinition());
+	}
+	
+	/**
+	 * 获取BeanDefinitionRegistry
+	 * @return
+	 */
+	public static BeanDefinitionRegistry getBeanDefinitionRegistry() {
+		Assert.notNull(applicationContext, "spring初始化失败");
+		ConfigurableApplicationContext ctx = (ConfigurableApplicationContext) applicationContext;
+		return (BeanDefinitionRegistry) ctx.getBeanFactory();
 	}
 	
 	/**
