@@ -15,7 +15,7 @@
 	http://www.springframework.org/schema/aop
 	http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<!-- <bean class="com.hp.tools.common.utils.SpringContextUtil" /> -->
+	<bean class="com.hp.tools.common.utils.SpringContextUtil" />
 
 </beans>
 
