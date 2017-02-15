@@ -43,7 +43,7 @@ public class HttpUtils {
 	 * @throws Exception
 	 */
 	public static Pair<Integer, String> postBody(String url, String body) throws Exception {
-		return postBody(url, body, null, DEFAULT_CHAR_SET, DEFAULT_TIME_OUT);
+		return postBody(url, body, null);
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public class HttpUtils {
 	 * @throws Exception
 	 */
 	public static Pair<Integer, String> httpPost(String url, Map<String, Object> param) throws Exception {
-		return httpPost(url, param, null, DEFAULT_CHAR_SET, DEFAULT_TIME_OUT);
+		return httpPost(url, param, null);
 	}
 	
 	/**
@@ -236,7 +236,7 @@ public class HttpUtils {
 	 * @throws Exception
 	 */
 	public static Pair<Integer, String> httpGet(String url) throws Exception {
-		return httpGet(url, null, DEFAULT_CHAR_SET, DEFAULT_TIME_OUT);
+		return httpGet(url, null);
 	}
 	
 	/**
@@ -268,8 +268,7 @@ public class HttpUtils {
 		String message = "";
 		try {
 			get = new HttpGet(url);
-			RequestConfig config = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).setConnectionRequestTimeout(timeout).build();//设置请求和传输超时时间
-			get.setConfig(config);
+			setConfig(get, headList, timeout);
 			long d1 = new Date().getTime();
 			re = client.execute(get);
 			code = re.getStatusLine().getStatusCode();
