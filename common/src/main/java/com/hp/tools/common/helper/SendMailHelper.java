@@ -21,7 +21,7 @@ public class SendMailHelper {
 	
 	JavaMailSenderImpl javaMailSenderImpl;
 	
-	@Value("${mail.send.from}")
+	@Value("${mail.send.from:xxx}")
 	private String from;
 	
 	/**
