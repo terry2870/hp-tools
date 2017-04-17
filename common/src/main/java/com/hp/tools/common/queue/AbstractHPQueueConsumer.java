@@ -21,6 +21,10 @@ public abstract class AbstractHPQueueConsumer {
 
 	static Logger log = LoggerFactory.getLogger(AbstractHPQueueConsumer.class);
 	
+	/**
+	 * 获取topic
+	 * @return
+	 */
 	public abstract String getTopic();
 	
 	/**
@@ -29,7 +33,11 @@ public abstract class AbstractHPQueueConsumer {
 	 */
 	public abstract void execute(Object message);
 	
-	public int getSize() {
+	/**
+	 * 获取消费者数量（默认一个）
+	 * @return
+	 */
+	public int getConsumerSize() {
 		return 1;
 	}
 	
@@ -43,9 +51,9 @@ public abstract class AbstractHPQueueConsumer {
 			log.warn("init error. with topic is empty.");
 			return;
 		}
-		ExecutorService exe = Executors.newFixedThreadPool(getSize());
+		ExecutorService exe = Executors.newFixedThreadPool(getConsumerSize());
 		BlockingQueue<Object> queue = HPQueueFactory.getInstance().getQueue(getTopic());
-		for (int i = 0; i < getSize(); i++) {
+		for (int i = 0; i < getConsumerSize(); i++) {
 			exe.execute(new Runnable() {
 				
 				@Override

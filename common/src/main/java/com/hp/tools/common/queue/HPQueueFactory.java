@@ -21,8 +21,8 @@ public class HPQueueFactory {
 	
 	private int queueMaxSize = 5000;
 	
-	//存放所有的队里
-	private static Map<String, BlockingQueue<Object>> queueMap = new ConcurrentHashMap<>();
+	//存放所有的队列
+	private Map<String, BlockingQueue<Object>> queueMap = new ConcurrentHashMap<>();
 
 	//保证单例
 	private static HPQueueFactory instance = new HPQueueFactory();
@@ -51,4 +51,9 @@ public class HPQueueFactory {
 		queueMap.put(topic, queue);
 		return queue;
 	}
+
+	public Map<String, BlockingQueue<Object>> getQueueMap() {
+		return queueMap;
+	}
+
 }
