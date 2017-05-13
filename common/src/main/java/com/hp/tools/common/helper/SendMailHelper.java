@@ -5,6 +5,7 @@ package com.hp.tools.common.helper;
 
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,10 @@ public class SendMailHelper {
 	 */
 	public void sendSimpleMailMessage(SimpleMailMessage message) {
 		log.info("sendSimpleMailMessage start. with message={}", message);
+		if (ArrayUtils.isEmpty(message.getTo())) {
+			log.warn("sendSimpleMailMessage error. to is empty. with message={}", message);
+			return;
+		}
 		message.setFrom(from);
 		javaMailSenderImpl.send(message);
 		log.info("sendSimpleMailMessage success. with message={}", message);
