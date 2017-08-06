@@ -13,11 +13,18 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<ognl.version>3.2.1</ognl.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.hp.tools</groupId>
 			<artifactId>hp-tools-common</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>ognl</groupId>
+			<artifactId>ognl</artifactId>
+			<version>${ognl.version}</version>
+		</dependency>
+
 	</dependencies>
 </project>
