@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.hp.jsptags.ognl.OgnlCache;
 import com.hp.tools.common.utils.ObjectUtil;
 import com.hp.tools.common.utils.SpringContextUtil;
 
@@ -46,7 +47,7 @@ public class WriteTag extends BaseTagSupport {
 				if (!StringUtils.isEmpty(this.property)) {
 					objName = objName + "." + this.property;
 				}
-				tmp = ObjectUtil.getValueFromObject(this.request, objName);
+				tmp = OgnlCache.getValue(objName, getDataFromRequest(this.request));
 				if (tmp == null || StringUtils.isEmpty(String.valueOf(tmp))) {
 					result = "";
 				} else {

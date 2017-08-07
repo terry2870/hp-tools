@@ -77,7 +77,42 @@
 		<body-content>EMPTY</body-content>
 		<info>输出contextPath</info>
 	</tag>
-
+	<tag>
+		<name>forEach</name>
+		<tag-class>com.hp.jsptags.tags.ForEachTag</tag-class>
+		<body-content>JSP</body-content>
+		<info>循环</info>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>startIndex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>endIndex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>item</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>total</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 	<tag>
 		<name>if</name>
 		<tag-class>com.hp.jsptags.tags.IfTag</tag-class>

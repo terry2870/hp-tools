@@ -4,6 +4,10 @@
  */
 package com.hp.jsptags.tags;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hp.tools.common.utils.ObjectUtil;
+import com.hp.jsptags.ognl.OgnlCache;
 
 
 public class BaseTagSupport extends TagSupport {
@@ -25,6 +29,8 @@ public class BaseTagSupport extends TagSupport {
 	private static final long serialVersionUID = 1L;
 	
 	protected final String DEFAULT_ATTRIBUTE_NAME = "defaultAttributeName";
+	protected final String DEFAULT_INDEX_ATTRIBUTE_NAME = "defaultIndexAttributeName";
+	protected final String DEFAULT_TOTAL_ATTRIBUTE_NAME = "defaultTotalAttributeName";
 	
 	static Logger log = LoggerFactory.getLogger(BaseTagSupport.class);
 
@@ -94,12 +100,45 @@ public class BaseTagSupport extends TagSupport {
 		return super.doStartTag();
 	}
 
+	/**
+	 * 从request中取数据
+	 * 优先级parameter>attribute>session
+	 * @param request
+	 * @return
+	 */
+	protected Map<String, Object> getDataFromRequest(HttpServletRequest request) {
+		//先从session中，再取attribute，再取parameter
+		Map<String, Object> map = new HashMap<>();
+		
+		//session
+		Enumeration<String> enu = request.getSession().getAttributeNames();
+		String key = null;
+		while (enu.hasMoreElements()) {
+			key = enu.nextElement();
+			map.put(key, request.getSession().getAttribute(key));
+		}
+		
+		//attribute
+		enu = request.getAttributeNames();
+		while (enu.hasMoreElements()) {
+			key = enu.nextElement();
+			map.put(key, request.getAttribute(key));
+		}
+		
+		//parameter
+		enu = request.getParameterNames();
+		while (enu.hasMoreElements()) {
+			key = enu.nextElement();
+			map.put(key, request.getParameter(key));
+		}
+		return map;
+	}
 	
 	protected String getValuesFromParam() throws Exception {
 		String result = null;
 		if (this.value != null) {
 			if (this.value.indexOf("{") == 0 && this.value.indexOf("}") > 0) {
-				Object tmp = ObjectUtil.getValueFromObject(this.request, this.value.substring(this.value.indexOf("{") + 1, this.value.indexOf("}")));
+				Object tmp = OgnlCache.getValue(this.value.substring(this.value.indexOf("{") + 1, this.value.indexOf("}")), getDataFromRequest(this.request));
 				if (tmp != null && !StringUtils.isEmpty(String.valueOf(tmp))) {
 					result = tmp.toString();
 				}

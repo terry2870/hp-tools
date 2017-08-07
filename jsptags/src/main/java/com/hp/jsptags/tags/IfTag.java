@@ -3,11 +3,6 @@
  */
 package com.hp.jsptags.tags;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 import org.apache.commons.lang3.StringUtils;
@@ -38,33 +33,6 @@ public class IfTag extends BaseTagSupport {
 		}
 	}
 	
-	private Map<String, Object> getDataFromRequest(HttpServletRequest request) {
-		//先从session中，再取attribute，再取parameter
-		Map<String, Object> map = new HashMap<>();
-		
-		//session
-		Enumeration<String> enu = request.getSession().getAttributeNames();
-		String key = null;
-		while (enu.hasMoreElements()) {
-			key = enu.nextElement();
-			map.put(key, request.getSession().getAttribute(key));
-		}
-		
-		//attribute
-		enu = request.getAttributeNames();
-		while (enu.hasMoreElements()) {
-			key = enu.nextElement();
-			map.put(key, request.getAttribute(key));
-		}
-		
-		//parameter
-		enu = request.getParameterNames();
-		while (enu.hasMoreElements()) {
-			key = enu.nextElement();
-			map.put(key, request.getParameter(key));
-		}
-		return map;
-	}
 	
 	public void setTest(String test) {
 		this.test = test;
