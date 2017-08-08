@@ -5,7 +5,6 @@ package com.hp.jsptags.tags;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.jsp.JspException;
 
@@ -14,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.hp.jsptags.ognl.OgnlCache;
 
 
@@ -55,11 +55,17 @@ public class ForEachTag extends BaseTagSupport {
 			log.warn("list is null from {}", this.name);
 			return SKIP_BODY;
 		}
-		if (!(obj instanceof List)) {
+		if (!(obj instanceof Collection) && !(obj instanceof Object[])) {
 			log.warn("value is not a list. from {}, and class is {}", this.name, obj.getClass());
 			return SKIP_BODY;
 		}
-		this.list = (Collection<Object>) obj;
+		
+		if (obj instanceof Collection) {
+			this.list = (Collection<Object>) obj;
+		} else if (obj instanceof Object[]) {
+			//如果是数组，把它转为collection
+			this.list = Lists.newArrayList((Object[]) obj);
+		}
 		
 		this.it = list.iterator();
 		
