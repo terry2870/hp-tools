@@ -45,6 +45,18 @@ public enum StatusEnum {
 		}
 		return null;
 	}
+	
+	public static String getTextByValue(Byte value) {
+		if (value == null) {
+			return null;
+		}
+		for (StatusEnum e : values()) {
+			if (value.byteValue() == e.getValue()) {
+				return e.getText();
+			}
+		}
+		return null;
+	}
 
 	public int getValue() {
 		return value;
