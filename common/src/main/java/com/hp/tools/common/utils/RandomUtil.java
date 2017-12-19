@@ -41,6 +41,12 @@ public class RandomUtil {
 		long tmp = rd.nextInt((int) (max - min));
 		return tmp + min;
 	}
+	
+	public static void main(String[] args) {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(getRandom(1, 2));
+		}
+	}
 
 	/**
 	 * 取指定长度的随机数

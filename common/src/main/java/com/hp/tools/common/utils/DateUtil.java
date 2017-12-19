@@ -163,7 +163,19 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String dateAdd(String date, String type, int offset, String... simpleDateFormat) {
-		if (StringUtils.isEmpty(date)) {
+		Date d = dateAdd(string2Date(date, simpleDateFormat), type, offset);
+		return dateToString(d, simpleDateFormat);
+	}
+	
+	/**
+	 * 对日期进行加减
+	 * @param date 被转换的日期
+	 * @param type 转换类型(y-年,M-月,d-日, H-小时, m-分钟, s-秒)
+	 * @param offset 转换的单位
+	 * @return
+	 */
+	public static Date dateAdd(Date date, String type, int offset) {
+		if (date == null) {
 			return null;
 		}
 		if (StringUtils.isEmpty(type)) {
@@ -173,7 +185,7 @@ public class DateUtil {
 			return date;
 		}
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(string2Date(date, getDateFormatter(simpleDateFormat)));
+		cal.setTime(date);
 		if (type.equals("y")) {
 			cal.add(Calendar.YEAR, offset);
 		} else if (type.equals("M")) {
@@ -187,7 +199,19 @@ public class DateUtil {
 		} else if (type.equals("s")) {
 			cal.add(Calendar.SECOND, offset);
 		}
-		return dateToString(cal.getTime(), simpleDateFormat);
+		return cal.getTime();
+	}
+	
+	/**
+	 * 对日期进行加减
+	 * @param date 被转换的日期
+	 * @param type 转换类型(y-年,M-月,d-日, H-小时, m-分钟, s-秒)
+	 * @param offset 转换的单位
+	 * @return
+	 */
+	public static int dateAdd(int date, String type, int offset) {
+		Date d = dateAdd(new Date((long)date * 1000), type, offset);
+		return (int) (d.getTime() / 1000);
 	}
 	
 	private static String getDateFormatter(String... format) {
