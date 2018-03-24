@@ -46,7 +46,7 @@ public enum StatusEnum {
 		return null;
 	}
 	
-	public static String getTextByValue(Byte value) {
+	public static String getTextByValue(Integer value) {
 		if (value == null) {
 			return null;
 		}
