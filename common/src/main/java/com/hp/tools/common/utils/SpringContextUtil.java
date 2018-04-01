@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.collections.MapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -20,22 +23,23 @@ import org.springframework.util.Assert;
  *         2012-12-1
  */
 public class SpringContextUtil implements ApplicationContextAware {
+	
+	private static Logger log = LoggerFactory.getLogger(SpringContextUtil.class);
 
-	static ApplicationContext applicationContext;
+	private static ApplicationContext applicationContext;
 
 	@Override
 	public synchronized void setApplicationContext(ApplicationContext ctx) throws BeansException {
 		SpringContextUtil.applicationContext = ctx;
 	}
-
-
+	
 	/**
 	 * 动态注册bean到spring容器中
 	 * @param beanName
 	 * @param className
 	 */
-	public static void loadBean(String beanName, Class<?> className) throws Exception {
-		loadBean(beanName, className, null);
+	public static void registerBean(String beanName, Class<?> className) throws BeanDefinitionStoreException {
+		registerBean(beanName, className, null);
 	}
 	
 	/**
@@ -44,9 +48,10 @@ public class SpringContextUtil implements ApplicationContextAware {
 	 * @param className
 	 * @param property
 	 */
-	public static void loadBean(String beanName, Class<?> className, Map<String, Object> property) throws Exception {
+	public static void registerBean(String beanName, Class<?> className, Map<String, Object> property) throws BeanDefinitionStoreException {
 		if (containsBean(beanName)) {
-			throw new Exception("【"+ beanName +"】，spring bean名称重复");
+			log.error("registerBean error. with beanName is exists. with beanName={}", beanName);
+			throw new BeanDefinitionStoreException("【"+ beanName +"】，spring bean名称重复");
 		}
 		ConfigurableApplicationContext ctx = (ConfigurableApplicationContext) applicationContext;
 		BeanDefinitionRegistry registry = (BeanDefinitionRegistry) ctx.getBeanFactory();
