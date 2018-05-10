@@ -4,21 +4,19 @@
 package com.hp.tools.common.utils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
-import com.hp.tools.common.beans.Response;
 
 /**
  * @author ping.huang 2016年10月10日
@@ -36,14 +34,14 @@ public class RestTemplateUtil {
 	 * @param responseClass
 	 * @return
 	 */
-	public static Response<?> postJSON(RestTemplate restTemplate, String url, Object request) {
+	public static <T> T postJSON(RestTemplate restTemplate, String url, Object request, Class<T> responseClass) {
 		log.info("call postJSON with url={}, request={}", url, request);
 		HttpHeaders headers = new HttpHeaders();
 		MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
 		headers.setContentType(type);
 		headers.add("Accept", MediaType.APPLICATION_JSON.toString());
 		HttpEntity<String> entity = new HttpEntity<String>(JSON.toJSONString(request), headers);
-		Response<?> response = restTemplate.postForObject(url, entity, Response.class);
+		T response = restTemplate.postForObject(url, entity, responseClass);
 		return response;
 	}
 	
@@ -56,13 +54,20 @@ public class RestTemplateUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static Response<?> postForm(RestTemplate restTemplate, String url, Object request) {
+	public static <T> T postForm(RestTemplate restTemplate, String url, Object request, Class<T> responseClass) {
 		log.info("call postForm with url={}, request={}", url, request);
-		List<String> paramList = new ArrayList<>();
+		MultiValueMap<String, String> requestEntity = new LinkedMultiValueMap<>();
 		if (request != null) {
 			if (request instanceof Map) {
+				String key = null;
+				Object value = null;
 				for (Entry<String, Object> entry : ((Map<String, Object>) request).entrySet()) {
-					paramList.add(entry.getKey() + "=" + entry.getValue().toString());
+					value = entry.getValue();
+					key = entry.getKey();
+					if (value == null) {
+						continue;
+					}
+					requestEntity.add(key, value.toString());
 				}
 			} else {
 				try {
@@ -73,7 +78,7 @@ public class RestTemplateUtil {
 						if (field.get(request) == null) {
 							continue;
 						}
-						paramList.add(field.getName() + "=" + field.get(request).toString());
+						requestEntity.add(field.getName(), field.get(request).toString());
 					}
 				} catch (IllegalAccessException e) {
 					log.error("", e);
@@ -82,8 +87,8 @@ public class RestTemplateUtil {
 		}
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		HttpEntity<String> entity = new HttpEntity<String>(StringUtils.join(paramList, "&"), headers);
-		Response<?> response = restTemplate.postForObject(url, entity, Response.class);
+		HttpEntity<MultiValueMap<String, String>> r = new HttpEntity<>(requestEntity, headers);
+		T response = restTemplate.postForObject(url, r, responseClass);
 		return response;
 	}
 	
@@ -94,9 +99,9 @@ public class RestTemplateUtil {
 	 * @param responseClass
 	 * @return
 	 */
-	public static Response<?> get(RestTemplate restTemplate, String url) {
+	public static <T> T get(RestTemplate restTemplate, String url, Class<T> responseClass) {
 		log.info("call get with url={}", url);
-		Response<?> response = restTemplate.getForObject(url, Response.class);
+		T response = restTemplate.getForObject(url, responseClass);
 		return response;
 	}
 	
